@@ -8,7 +8,6 @@ import {
   selectFeed,
   selectIsLoading
 } from '../../services/slices/feed';
-import { getIngredientsThunk } from '../../services/slices/ingredients';
 
 export const Feed: FC = () => {
   const dispatch = useDispatch();
@@ -21,7 +20,6 @@ export const Feed: FC = () => {
 
   useEffect(() => {
     dispatch(getFeedThunk());
-    dispatch(getIngredientsThunk());
   }, []);
 
   if (isLoading) {

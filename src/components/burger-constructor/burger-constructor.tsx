@@ -9,16 +9,28 @@ import {
   selectOrderModalData,
   selectOrderRequest
 } from '../../services/slices/burgersConstructor';
+import { isUserAuth } from '../../services/slices/user';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const constructorItems = useSelector(selectConstructorItems);
   const orderRequest = useSelector(selectOrderRequest);
   const orderModalData = useSelector(selectOrderModalData);
+  const isAuth = useSelector(isUserAuth);
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
+
+    if (!isAuth) {
+      navigate('/login', {
+        state: { from: location.pathname }
+      });
+      return;
+    }
 
     dispatch(orderBurgerThunk());
   };
